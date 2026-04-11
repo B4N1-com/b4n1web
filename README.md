@@ -20,12 +20,16 @@ Choose your language:
 | C#/.NET | `dotnet add package B4n1Web` |
 | Java | `com.b4n1:b4n1-web:0.4.0` |
 
+All SDKs include the b4n1web binary — no separate installation needed.
+
 ## Install Binary (Standalone)
 
 For direct CLI usage, MCP server, or bulk operations:
 
 ```bash
 curl -sL https://web.b4n1.com/install | bash
+b4n1web --version
+b4n1web mcp -p 8080
 ```
 
 ## Quick Start
@@ -49,6 +53,7 @@ print(page.markdown)
 ## Releases
 
 Binary releases available for Linux, macOS, and Windows.
+See [Releases](https://github.com/B4N1-com/b4n1web/releases) for downloads.
 
 ---
 *Built by B4N1 with ❤️ · All rights reserved.*
