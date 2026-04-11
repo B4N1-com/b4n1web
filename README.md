@@ -52,8 +52,16 @@ print(page.markdown)
 
 ## Releases
 
-Binary releases available for Linux, macOS, and Windows.
-See [Releases](https://github.com/B4N1-com/b4n1web/releases) for downloads.
+Binary releases disponibles:
+
+| Plataforma | Estado |
+|------------|--------|
+| Linux x86_64 | ✅ Disponible |
+| macOS x86_64 | ⏳ Coming soon |
+| macOS ARM64 | ⏳ Coming soon |
+| Windows x86_64 | ⏳ Coming soon |
+
+Ver [Releases](https://github.com/B4N1-com/b4n1web/releases) para descargas.
 
 ---
 *Built by B4N1 with ❤️ · All rights reserved.*
