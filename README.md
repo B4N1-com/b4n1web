@@ -2,7 +2,9 @@
 
 [![PyPI version](https://badge.fury.io/py/b4n1-web.svg)](https://pypi.org/project/b4n1-web/)
 [![npm version](https://badge.fury.io/js/b4n1-web.svg)](https://www.npmjs.com/package/b4n1-web)
+[![Go Reference](https://pkg.go.dev/badge/github.com/B4N1-com/b4n1web.svg)](https://pkg.go.dev/github.com/B4N1-com/b4n1web)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
 > Ultra-lightweight agentic browser engine. Navigate URLs, extract content (markdown, links, screenshots), and build AI agent workflows.
 
