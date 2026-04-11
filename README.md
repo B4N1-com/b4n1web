@@ -1,0 +1,54 @@
+# B4n1Web
+
+[![PyPI version](https://badge.fury.io/py/b4n1-web.svg)](https://pypi.org/project/b4n1-web/)
+[![npm version](https://badge.fury.io/js/b4n1-web.svg)](https://www.npmjs.com/package/b4n1-web)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+> Ultra-lightweight agentic browser engine. Navigate URLs, extract content (markdown, links, screenshots), and build AI agent workflows.
+
+## 🌐 [Website](https://web.b4n1.com)
+
+## Install SDK
+
+Choose your language:
+
+| Language | Install |
+|----------|---------|
+| Python | `pip install b4n1-web` |
+| JavaScript/TypeScript | `npm install b4n1-web` |
+| Go | `go get github.com/B4N1-com/b4n1web` |
+| C#/.NET | `dotnet add package B4n1Web` |
+| Java | `com.b4n1:b4n1-web:0.4.0` |
+
+## Install Binary (Standalone)
+
+For direct CLI usage, MCP server, or bulk operations:
+
+```bash
+curl -sL https://web.b4n1.com/install | bash
+```
+
+## Quick Start
+
+```python
+from b4n1web import AgentBrowser
+
+browser = AgentBrowser()
+page = browser.goto("https://example.com")
+print(page.markdown)
+```
+
+## Features
+
+- **Light Mode**: HTTP fetch + HTML parsing (~15MB RAM, instant startup)
+- **JS Mode**: JavaScript extraction from pages
+- **Render Mode**: Full Chromium rendering with screenshots
+- **SecurityShield**: Domain-level safety validation
+- **MCP Support**: Model Context Protocol for AI agents
+
+## Releases
+
+Binary releases available for Linux, macOS, and Windows.
+
+---
+*Built by B4N1 with ❤️ · All rights reserved.*
