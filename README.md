@@ -16,13 +16,13 @@
 
 ### Option 1: SDK (Recommended)
 
-| Language | Install |
-|----------|---------|
-| Python | `pip install b4n1-web` |
-| JavaScript/TypeScript | `npm install b4n1-web` |
-| Go | `go get github.com/B4N1-com/b4n1web` |
-| C#/.NET | `dotnet add package B4n1Web` |
-| Java | `com.b4n1:b4n1-web:0.4.0` |
+| Language | Install | Version |
+|----------|---------|---------|
+| Python | `pip install b4n1-web` | [0.5.0](https://pypi.org/project/b4n1-web/0.5.0/) |
+| JavaScript/TypeScript | `npm install b4n1-web` | [0.5.0](https://www.npmjs.com/package/b4n1-web/v/0.5.0) |
+| Go | `go get github.com/B4N1-com/b4n1web` | [0.5.0](https://pkg.go.dev/github.com/B4N1-com/b4n1web) |
+| C#/.NET | `dotnet add package B4n1Web` | [0.5.0](https://www.nuget.org/packages/B4n1Web/0.5.0) |
+| Java | See below | [0.5.0](https://central.sonatype.com/artifact/com.b4n1/b4n1-web) |
 
 ### Option 2: Binary (Standalone)
 
@@ -46,7 +46,7 @@ print(f"Found {len(page.links)} links")
 browser.close()
 ```
 
-### JavaScript
+### JavaScript/TypeScript
 
 ```javascript
 import { AgentBrowser, BrowserMode } from 'b4n1-web';
@@ -54,35 +54,85 @@ import { AgentBrowser, BrowserMode } from 'b4n1-web';
 const browser = new AgentBrowser({ mode: BrowserMode.LIGHT });
 const page = await browser.goto('https://example.com');
 console.log(page.markdown);
+console.log(page.links.length, 'links found');
 browser.close();
 ```
 
 ### Go
 
 ```go
-import b4n1web "github.com/B4N1-com/b4n1web"
+package main
 
-browser, _ := b4n1web.NewAgentBrowser(b4n1web.WithMode(b4n1web.ModeLight))
-page, _ := browser.Goto("https://example.com")
-fmt.Println(page.Markdown)
+import (
+    "fmt"
+    b4n1web "github.com/B4N1-com/b4n1web"
+)
+
+func main() {
+    browser, _ := b4n1web.NewAgentBrowser(b4n1web.WithMode(b4n1web.ModeLight))
+    defer browser.Close()
+    
+    page, _ := browser.Goto("https://example.com")
+    fmt.Println(page.Markdown)
+    fmt.Println(len(page.Links), "links found")
+}
 ```
+
+### Java
+
+```xml
+<!-- pom.xml -->
+<dependency>
+    <groupId>com.b4n1</groupId>
+    <artifactId>b4n1-web</artifactId>
+    <version>0.5.0</version>
+</dependency>
+```
+
+```java
+import com.b4n1.web.*;
+
+AgentBrowser browser = new AgentBrowser(new BrowserOptions());
+Page page = browser.goto_("https://example.com");
+System.out.println(page.getMarkdown());
+System.out.println(page.getLinks().size() + " links found");
+browser.close();
+```
+
+### C#
+
+```csharp
+using B4N1Web;
+
+var browser = new AgentBrowser(new BrowserOptions { Mode = BrowserMode.Light });
+var page = browser.Goto("https://example.com");
+Console.WriteLine(page.Markdown);
+Console.WriteLine($"{page.Links.Count} links found");
+browser.Close();
+```
+
+## Page Object
+
+All SDKs return the same structured data:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `Url` / `url` | string | Final URL after navigation |
+| `Markdown` / `markdown` | string | Page content as markdown |
+| `Links` / `links` | List\<string\> | All links found on page |
+| `Screenshot` / `screenshot` | string? | Base64 PNG (render mode only) |
+
+Methods:
+- `getMainContent()` / `GetMainContent()` — Extract content without headers
+- `findLinksByText(text)` / `FindLinksByText(text)` — Find links containing text
 
 ## Browser Modes
 
-| Mode | Description | RAM | Speed |
-|------|-------------|-----|-------|
-| **Light** | HTTP fetch + HTML parsing | ~15MB | Instant |
-| **JS** | Light + JavaScript extraction | ~15MB | Instant |
-| **Render** | Full Chromium + screenshots | ~100MB | ~2s |
-
-## Features
-
-- **Ultra-lightweight**: Binary is ~5.5MB, compiled with LTO
-- **Multi-language SDKs**: Python, JS, Go, Java, C#
-- **MCP Server**: Native support for AI agent integration
-- **Screenshots**: Render mode captures PNG screenshots as base64
-- **Security**: Domain-level validation in the binary
-- **Zero-config**: Install and use immediately
+| Mode | Flag | Description | RAM | Speed |
+|------|------|-------------|-----|-------|
+| **Light** | `--mode light` | HTTP fetch + HTML parsing | ~15MB | Instant |
+| **JS** | `--mode js` | Light + JavaScript extraction | ~15MB | Instant |
+| **Render** | `--mode render` | Full Chromium + screenshots | ~100MB | ~2s |
 
 ## MCP Server
 
@@ -98,7 +148,7 @@ Available tools:
 
 ## Screenshot Decoding
 
-Render mode outputs screenshots as base64. Decode to PNG:
+Render mode outputs screenshots as base64 PNG. Decode to file:
 
 ```bash
 b4n1web goto https://example.com --mode render \
@@ -107,31 +157,15 @@ b4n1web goto https://example.com --mode render \
   | base64 -d > screenshot.png
 ```
 
-## Releases
+## Features
 
-| Platform | Status |
-|----------|--------|
-| Linux x86_64 | ✅ Available |
-| macOS x86_64 | ⏳ Coming soon |
-| macOS ARM64 | ⏳ Coming soon |
-| Windows x86_64 | ⏳ Coming soon |
-
-Download from [Releases](https://github.com/B4N1-com/b4n1web/releases).
-
-## Tests
-
-| Component | Tests | Status |
-|-----------|-------|--------|
-| Python SDK | 163 | ✅ Passing |
-| JavaScript SDK | 34 | ✅ Passing |
-| Java SDK | 49 | ✅ Passing |
-| C# SDK | 34 | ✅ Passing |
-| Go SDK | 37 | ✅ Passing |
-| Rust Engine | 74 | ✅ Passing |
-| Binary (bash) | 33 | ✅ Passing |
-| E2E Podman | 6 SDKs | ✅ Passing |
-
-**Total: 424+ tests, 0 failing**
+- **Ultra-lightweight**: Binary is ~5.5MB, compiled with LTO
+- **5 language SDKs**: Python, JS, Go, Java, C#
+- **Bundled binary**: `pip install` includes everything
+- **MCP Server**: Native AI agent integration
+- **Screenshots**: Render mode captures PNG as base64
+- **Security**: Domain-level validation
+- **424+ tests**: All passing across all SDKs
 
 ---
 *Built by B4N1 with ❤️ · All rights reserved.*
